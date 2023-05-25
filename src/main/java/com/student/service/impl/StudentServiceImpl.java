@@ -117,6 +117,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
+        Student st = studentRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NO_CONTENT,"Student is not Found"));
         if (studentRequest.getMarks1()==null){
             if (studentRequest.getMarks1()>=0 && studentRequest.getMarks1()<=100) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 should 0-100");
@@ -160,8 +162,6 @@ public class StudentServiceImpl implements StudentService {
             result = "Fail";
         }
 
-
-        Student st = new Student();
         st.setMarks1(studentRequest.getMarks1());
         st.setMarks2(studentRequest.getMarks2());
         st.setMarks3(studentRequest.getMarks3());
