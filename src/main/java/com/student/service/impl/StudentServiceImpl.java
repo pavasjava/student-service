@@ -49,18 +49,51 @@ public class StudentServiceImpl implements StudentService {
         if (studentRequest.getGender()==null && studentRequest.getGender() == "M" || studentRequest.getGender() == "F"){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Gender is Required and it should be 'M' or 'F' ");
         }
-        if (studentRequest.getMarks1()==null && studentRequest.getMarks1()>=0 && studentRequest.getMarks1()<=100){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 is Required and it should 0-100");
+        if (studentRequest.getMarks1()==null){
+            if (studentRequest.getMarks1()>=0 && studentRequest.getMarks1()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 should 0-100");
+
+            } else if (studentRequest.getMarks1()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1");
+
         }
-        if (studentRequest.getMarks2()==null && studentRequest.getMarks2()>=0 && studentRequest.getMarks2()<=100){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2 is Required and it should 0-100");
+        if (studentRequest.getMarks2()==null){
+            if (studentRequest.getMarks2()>=0 && studentRequest.getMarks2()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2 should 0-100");
+
+            } else if (studentRequest.getMarks2()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2");
+
         }
-        if (studentRequest.getMarks3()==null && studentRequest.getMarks3()>=0 && studentRequest.getMarks3()<=100){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3 is Required and it should 0-100");
+        if (studentRequest.getMarks3()==null){
+            if (studentRequest.getMarks3()>=0 && studentRequest.getMarks3()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3 should 0-100");
+
+            } else if (studentRequest.getMarks3()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3");
+
         }
         if (studentRequest.getSection()==null && studentRequest.getSection()=="A"  || studentRequest.getSection()=="B" ||studentRequest.getSection()=="C"){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Section is Required and it should A, B or C Section");
         }
+        Integer total = studentRequest.getMarks1()+studentRequest.getMarks2()+studentRequest.getMarks3();
+        Double avg = (double) (total/300*100);
+        String result = null;
+        if (avg>35 && avg<50 ) {
+            result = "Third Division";
+        } else if (avg>50 && avg<60) {
+            result = "Second Division";
+        }
+        else {
+            result = "First Division";
+        }
+
         Student st = new Student();
         st.setFirstName(st.getFirstName());
         st.setLastName(st.getLastName());
@@ -70,9 +103,9 @@ public class StudentServiceImpl implements StudentService {
         st.setMarks1(st.getMarks1());
         st.setMarks2(st.getMarks2());
         st.setMarks3(st.getMarks3());
-        st.setTotal(st.getTotal());
-        st.setAvg(st.getAvg());
-        st.setResult(st.getResult());
+        st.setTotal(total);
+        st.setAvg(avg);
+        st.setResult(result);
         st = studentRepository.save(st);
         return toResponse(st);
     }
@@ -80,11 +113,60 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findAll(){
         return studentRepository.findAll();
     }
-    @Transactional(readOnly = true)
-    public Optional<Student> findOne(Long id){
-        return studentRepository.findById(id);
-    }
-    public void delete(Long id) {
-        studentRepository.deleteById(id);
+
+    @Override
+    public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
+        if (studentRequest.getMarks1()==null){
+            if (studentRequest.getMarks1()>=0 && studentRequest.getMarks1()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 should 0-100");
+
+            } else if (studentRequest.getMarks1()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark1");
+
+        }
+        if (studentRequest.getMarks2()==null){
+            if (studentRequest.getMarks2()>=0 && studentRequest.getMarks2()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2 should 0-100");
+
+            } else if (studentRequest.getMarks2()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark2");
+
+        }
+        if (studentRequest.getMarks3()==null){
+            if (studentRequest.getMarks3()>=0 && studentRequest.getMarks3()<=100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3 should 0-100");
+
+            } else if (studentRequest.getMarks3()<=35) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3 should be more than 35");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Mark3");
+
+        }
+        Integer total = studentRequest.getMarks1()+studentRequest.getMarks2()+studentRequest.getMarks3();
+        Double avg = (double) (total/300*100);
+        String result = null;
+        if (avg>35 && avg<50 ) {
+            result = "Third Division";
+        } else if (avg>50 && avg<60) {
+            result = "Second Division";
+        }
+        else {
+            result = "First Division";
+        }
+
+
+        Student st = new Student();
+        st.setMarks1(st.getMarks1());
+        st.setMarks2(st.getMarks2());
+        st.setMarks3(st.getMarks3());
+        st.setTotal(total);
+        st.setAvg(avg);
+        st.setResult(result);
+        st = studentRepository.save(st);
+        return toResponse(st);
     }
 }

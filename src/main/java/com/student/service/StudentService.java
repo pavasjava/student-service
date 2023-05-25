@@ -14,4 +14,5 @@ public interface StudentService {
     public List<Student> findAll();
     public Optional<Student> findOne(Long id);
     public void delete(Long id);
+    public StudentResponse updateStudent(Long id,StudentRequest studentRequest);
 }

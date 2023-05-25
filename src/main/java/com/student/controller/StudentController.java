@@ -28,4 +28,8 @@ public class StudentController {
     public ResponseEntity<StudentResponse> addStudent(@RequestBody StudentRequest studentRequest){
         return new ResponseEntity<>(studentService.save(studentRequest), HttpStatus.CREATED);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<StudentResponse> updateStudent(@PathVariable Long id,@RequestBody StudentRequest studentRequest){
+        return new ResponseEntity<>(studentService.updateStudent(id,studentRequest), HttpStatus.OK);
+    }
 }
