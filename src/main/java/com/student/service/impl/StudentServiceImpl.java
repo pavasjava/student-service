@@ -80,10 +80,10 @@ public class StudentServiceImpl implements StudentService {
 
         }
         if (studentRequest.getSection()==null && studentRequest.getSection()=="A"  || studentRequest.getSection()=="B" ||studentRequest.getSection()=="C"){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Section is Required and it should A, B or C Section");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Student Section is Required and it should be A, B or C Section");
         }
         Integer total = studentRequest.getMarks1()+studentRequest.getMarks2()+studentRequest.getMarks3();
-        Double avg = (double) (total/300*100);
+        double avg = (total/300.0)*100;
         String result = null;
         if (avg>35 && avg<50 ) {
             result = "Third Division";
@@ -150,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
 
         }
         Integer total = studentRequest.getMarks1()+studentRequest.getMarks2()+studentRequest.getMarks3();
-        Double avg = (double) (total/300*100);
+        double avg = (total/300.0)*100;
         String result = null;
         if (avg>35 && avg<50 ) {
             result = "Third Division";
