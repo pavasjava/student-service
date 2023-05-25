@@ -89,9 +89,10 @@ public class StudentServiceImpl implements StudentService {
             result = "Third Division";
         } else if (avg>50 && avg<60) {
             result = "Second Division";
-        }
-        else {
+        } else if (avg>=60) {
             result = "First Division";
+        } else {
+            result = "Fail";
         }
 
         Student st = new Student();
