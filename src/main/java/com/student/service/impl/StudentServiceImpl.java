@@ -95,14 +95,14 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Student st = new Student();
-        st.setFirstName(st.getFirstName());
-        st.setLastName(st.getLastName());
-        st.setGender(st.getGender());
-        st.setDob(st.getDob());
-        st.setSection(st.getSection());
-        st.setMarks1(st.getMarks1());
-        st.setMarks2(st.getMarks2());
-        st.setMarks3(st.getMarks3());
+        st.setFirstName(studentRequest.getFirstName());
+        st.setLastName(studentRequest.getLastName());
+        st.setGender(studentRequest.getGender());
+        st.setDob(studentRequest.getDob());
+        st.setSection(studentRequest.getSection());
+        st.setMarks1(studentRequest.getMarks1());
+        st.setMarks2(studentRequest.getMarks2());
+        st.setMarks3(studentRequest.getMarks3());
         st.setTotal(total);
         st.setAvg(avg);
         st.setResult(result);
@@ -153,16 +153,17 @@ public class StudentServiceImpl implements StudentService {
             result = "Third Division";
         } else if (avg>50 && avg<60) {
             result = "Second Division";
-        }
-        else {
+        } else if (avg>=60) {
             result = "First Division";
+        } else {
+            result = "Fail";
         }
 
 
         Student st = new Student();
-        st.setMarks1(st.getMarks1());
-        st.setMarks2(st.getMarks2());
-        st.setMarks3(st.getMarks3());
+        st.setMarks1(studentRequest.getMarks1());
+        st.setMarks2(studentRequest.getMarks2());
+        st.setMarks3(studentRequest.getMarks3());
         st.setTotal(total);
         st.setAvg(avg);
         st.setResult(result);

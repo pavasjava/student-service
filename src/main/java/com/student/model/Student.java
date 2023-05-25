@@ -20,7 +20,7 @@ public class Student {
     @Size(min = 3)
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "dob",nullable = false)
+    @Column(name = "dob")
     private String dob;
     @Column(name = "section")
     private String section;
